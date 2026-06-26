@@ -14,6 +14,8 @@ const PROSE_WORDS = PROSE.split(" ");
 const STAGGER = 0.045;
 const PROSE_DELAY = 0.15;
 const NAME_DELAY = PROSE_DELAY + PROSE_WORDS.length * STAGGER + 0.25;
+const NAME_DURATION = 0.9;
+const BUTTON_DELAY = NAME_DELAY + NAME_DURATION + 0.35;
 
 const containerVariants = {
   hidden: {},
@@ -111,13 +113,20 @@ export default function Home() {
         </motion.span>
       </motion.h2>
 
-      <button
+      <motion.button
         onClick={() => setView("rolling")}
+        initial={{ opacity: 0, y: 14, filter: "blur(10px)", scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+        transition={{
+          duration: 0.8,
+          ease: "easeOut",
+          delay: BUTTON_DELAY,
+        }}
         className="inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
       >
         <DiceTwentyFacesTwenty className="w-6 h-6 text-amber-300" />
         Roll Dice for Initiative
-      </button>
+      </motion.button>
     </main>
   );
 }

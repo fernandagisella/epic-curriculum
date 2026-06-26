@@ -58,19 +58,30 @@ export default function GrimoireTabs() {
   const ActivePanel = TABS.find((t) => t.id === active).Panel;
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <header className="text-center mb-8">
-        <h1 className="font-gothic text-3xl sm:text-4xl uppercase tracking-[0.25em] text-amber-200">
-          The Grimoire of Fernanda
-        </h1>
-      </header>
+    <div className="relative w-full max-w-5xl mx-auto my-4 border-2 border-amber-900/60 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.7)] overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[url('/assets/grunge-background.jpg')] bg-cover bg-center"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-950/40 to-stone-950/70 mix-blend-multiply"
+      />
 
-      <div className="flex flex-col gap-5">
-        <TabNav active={active} onChange={setActive} />
-        <div className="border-2 border-amber-900/40 bg-stone-950/40 p-5 sm:p-6 shadow-inner shadow-black/40 min-h-[24rem]">
-          <TabContent tabKey={active}>
-            <ActivePanel />
-          </TabContent>
+      <div className="relative px-4 sm:px-6 py-8">
+        <header className="text-center mb-8">
+          <h1 className="font-gothic text-3xl sm:text-4xl uppercase tracking-[0.25em] text-amber-200 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            The Grimoire of Fernanda
+          </h1>
+        </header>
+
+        <div className="flex flex-col gap-5">
+          <TabNav active={active} onChange={setActive} />
+          <div className="border-2 border-amber-900/40 bg-stone-950/60 p-5 sm:p-6 shadow-inner shadow-black/40 min-h-[24rem]">
+            <TabContent tabKey={active}>
+              <ActivePanel />
+            </TabContent>
+          </div>
         </div>
       </div>
     </div>
