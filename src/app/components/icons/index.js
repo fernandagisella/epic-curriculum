@@ -18,6 +18,7 @@ export { default as SurroundedShield } from "./SurroundedShield.jsx";
 export { default as Talk } from "./Talk.jsx";
 export { default as Tarot01TheMagician } from "./Tarot01TheMagician.jsx";
 export { default as ThunderBlade } from "./ThunderBlade.jsx";
+export { default as TreasureChest } from "./TreasureChest.jsx";
 export { default as WingedScepter } from "./WingedScepter.jsx";
 export { default as WitchFace } from "./WitchFace.jsx";
 export { default as WitchHat } from "./WitchHat.jsx";
