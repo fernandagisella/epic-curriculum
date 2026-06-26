@@ -12,10 +12,20 @@ const OUTCOMES = {
     copy: "Critical Hit! The Code Witch casts 'Clean Architecture' while downing a perfect espresso. All bugs in a 50-mile radius instantly vanish, and her Mana (Coffee Supply) is automatically refilled. You gain +5 to Sanity.",
     color: "text-amber-300",
   },
+  greatSuccess: {
+    label: "Great Success",
+    copy: "A masterful roll! Fueled by a fresh-pulled espresso, the Code Witch glides through the seal with practiced ease — variables align, types behave, and the linter holds its tongue. The grimoire opens at thy command.",
+    color: "text-amber-200",
+  },
   success: {
     label: "Initiative Passed",
     copy: "Initiative passed! The chaos magic flows smoothly (thanks to a fresh cup of coffee). The seals break and the grimoire opens...",
     color: "text-amber-100",
+  },
+  slimMargin: {
+    label: "Slim Margin",
+    copy: "By the skin of thy teeth! The chaos magic sputters, the coffee runs cold, but the Witch jury-rigs a passing spell with duct-tape syntax and stubborn willpower. The grimoire creaks open — suspicious of thy fortune.",
+    color: "text-amber-500",
   },
   criticalFail: {
     label: "Critical Failure",
@@ -26,8 +36,10 @@ const OUTCOMES = {
 
 function classify(roll) {
   if (roll === 20) return "criticalSuccess";
-  if (roll === 1) return "criticalFail";
-  return "success";
+  if (roll >= 15) return "greatSuccess";
+  if (roll >= 8) return "success";
+  if (roll >= 2) return "slimMargin";
+  return "criticalFail";
 }
 
 const CRIT_GLOW_KEYFRAMES = [
@@ -138,9 +150,15 @@ export default function D20Dice({ onComplete }) {
   const diceColor =
     outcome === "criticalSuccess"
       ? "text-amber-300"
-      : outcome === "criticalFail"
-        ? "text-rose-400"
-        : "text-amber-200";
+      : outcome === "greatSuccess"
+        ? "text-amber-200"
+        : outcome === "success"
+          ? "text-amber-100"
+          : outcome === "slimMargin"
+            ? "text-amber-500"
+            : outcome === "criticalFail"
+              ? "text-rose-400"
+              : "text-amber-200";
 
   const diceAnimate =
     phase === "rolling"
@@ -154,7 +172,18 @@ export default function D20Dice({ onComplete }) {
         ? { x: [0, -16, 16, -12, 12, -6, 6, 0] }
         : outcome === "criticalSuccess"
           ? { scale: [1, 1.08, 1, 1.08, 1], filter: CRIT_GLOW_KEYFRAMES }
-          : { scale: [1, 1.04, 1] };
+          : outcome === "greatSuccess"
+            ? {
+                scale: [1, 1.06, 1],
+                filter: [
+                  "drop-shadow(0 0 0 transparent)",
+                  "drop-shadow(0 0 16px rgba(252, 211, 77, 0.7))",
+                  "drop-shadow(0 0 4px rgba(252, 211, 77, 0.25))",
+                ],
+              }
+            : outcome === "slimMargin"
+              ? { x: [0, -6, 6, -4, 4, 0], scale: [1, 1.02, 1] }
+              : { scale: [1, 1.04, 1] };
 
   const diceTransition =
     phase === "rolling"
@@ -166,7 +195,11 @@ export default function D20Dice({ onComplete }) {
               scale: { duration: 1.6, repeat: Infinity, ease: "easeInOut" },
               filter: { duration: 1.6, repeat: Infinity, ease: "easeInOut" },
             }
-          : { duration: 0.6, ease: "easeOut" };
+          : outcome === "greatSuccess"
+            ? { duration: 1.1, ease: "easeOut" }
+            : outcome === "slimMargin"
+              ? { duration: 0.8, ease: "easeOut" }
+              : { duration: 0.6, ease: "easeOut" };
 
   return (
     <div className="flex flex-col items-center gap-8 w-full max-w-2xl">
