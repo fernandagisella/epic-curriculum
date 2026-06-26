@@ -24,6 +24,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="preload" href="/assets/roll.mp3" as="audio" />
+        <link rel="preload" href="/assets/woosh.mp3" as="audio" />
       </head>
       <body
         className={`${cinzel.variable} ${garamond.variable} antialiased bg-stone-900 text-amber-100 overflow-x-hidden`}

@@ -69,6 +69,7 @@ export default function Home() {
   const [rollResult, setRollResult] = useState(null);
   const [introReady, setIntroReady] = useState(false);
   const rollSoundRef = useRef(null);
+  const wooshSoundRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIntroReady(true), INTRO_DELAY_MS);
@@ -86,6 +87,17 @@ export default function Home() {
     });
     // Let the sound "announce" the roll before the view transitions.
     setTimeout(() => setView("rolling"), 300);
+  };
+
+  const playWoosh = () => {
+    if (!wooshSoundRef.current) {
+      wooshSoundRef.current = new Audio("/assets/woosh.mp3");
+      wooshSoundRef.current.volume = 0.55;
+    }
+    wooshSoundRef.current.currentTime = 0;
+    wooshSoundRef.current.play().catch((err) => {
+      console.warn("Woosh sound playback failed:", err);
+    });
   };
 
   const stopRollSound = () => {
@@ -124,6 +136,7 @@ export default function Home() {
             <D20Dice
               onRollEnd={stopRollSound}
               onComplete={(value) => {
+                playWoosh();
                 setRollResult(value);
                 setView("grimoire");
               }}
