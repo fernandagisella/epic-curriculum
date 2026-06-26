@@ -127,7 +127,7 @@ function D20Svg({ value }) {
   );
 }
 
-export default function D20Dice({ onComplete }) {
+export default function D20Dice({ onComplete, onRollEnd }) {
   const [phase, setPhase] = useState("rolling");
   const [displayValue, setDisplayValue] = useState(
     () => Math.floor(Math.random() * 20) + 1,
@@ -136,6 +136,7 @@ export default function D20Dice({ onComplete }) {
 
   useEffect(() => {
     if (phase !== "rolling") return;
+
     const interval = setInterval(() => {
       setDisplayValue(Math.floor(Math.random() * 20) + 1);
     }, FLICKER_INTERVAL);
@@ -145,12 +146,13 @@ export default function D20Dice({ onComplete }) {
       setFinalValue(result);
       setDisplayValue(result);
       setPhase("result");
+      onRollEnd?.();
     }, ROLL_DURATION);
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, [phase]);
+  }, [phase, onRollEnd]);
 
   const outcome = finalValue != null ? classify(finalValue) : null;
   const diceColor =

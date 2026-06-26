@@ -1,5 +1,6 @@
 import { Cinzel, EB_Garamond } from "next/font/google";
 import "./globals.css";
+import Preloader from "./components/Preloader";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -21,9 +22,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/assets/roll.mp3" as="audio" />
+      </head>
       <body
         className={`${cinzel.variable} ${garamond.variable} antialiased bg-stone-900 text-amber-100 overflow-x-hidden`}
       >
+        <Preloader />
         {children}
       </body>
     </html>

@@ -10,6 +10,7 @@ export { default as MagicBall } from "./MagicBall.jsx";
 export { default as MagicPotion } from "./MagicPotion.jsx";
 export { default as MagicWand } from "./MagicWand.jsx";
 export { default as OrbWand } from "./OrbWand.jsx";
+export { default as Rerth } from "./Rerth.jsx";
 export { default as Rupee } from "./Rupee.jsx";
 export { default as ScrollUnfurled } from "./ScrollUnfurled.jsx";
 export { default as ShepherdsCrook } from "./ShepherdsCrook.jsx";

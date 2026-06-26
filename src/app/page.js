@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DiceTwentyFacesTwenty } from "./components/icons";
 import GrimoireTabs from "./components/GrimoireTabs";
@@ -62,9 +62,50 @@ const viewTransitions = {
   },
 };
 
+const INTRO_DELAY_MS = 2500;
+
 export default function Home() {
   const [view, setView] = useState("welcome");
   const [rollResult, setRollResult] = useState(null);
+  const [introReady, setIntroReady] = useState(false);
+  const rollSoundRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIntroReady(true), INTRO_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const startRoll = () => {
+    if (!rollSoundRef.current) {
+      rollSoundRef.current = new Audio("/assets/roll.mp3");
+      rollSoundRef.current.volume = 0.6;
+    }
+    rollSoundRef.current.currentTime = 0;
+    rollSoundRef.current.play().catch((err) => {
+      console.warn("Roll sound playback failed:", err);
+    });
+    setView("rolling");
+  };
+
+  const stopRollSound = () => {
+    const audio = rollSoundRef.current;
+    if (!audio || audio.paused) return;
+    const startVolume = audio.volume;
+    const start = performance.now();
+    const fadeMs = 220;
+    const fade = () => {
+      const t = Math.min((performance.now() - start) / fadeMs, 1);
+      audio.volume = startVolume * (1 - t);
+      if (t < 1) {
+        requestAnimationFrame(fade);
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.volume = startVolume;
+      }
+    };
+    requestAnimationFrame(fade);
+  };
 
   return (
     <>
@@ -80,6 +121,7 @@ export default function Home() {
             className="relative z-10 min-h-screen flex flex-col items-center justify-center gap-8 p-8"
           >
             <D20Dice
+              onRollEnd={stopRollSound}
               onComplete={(value) => {
                 setRollResult(value);
                 setView("grimoire");
@@ -111,7 +153,7 @@ export default function Home() {
           </motion.main>
         )}
 
-        {view === "welcome" && (
+        {view === "welcome" && introReady && (
           <motion.main
             key="welcome"
             initial={viewTransitions.initial}
@@ -172,7 +214,7 @@ export default function Home() {
             </motion.h2>
 
             <motion.button
-              onClick={() => setView("rolling")}
+              onClick={startRoll}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
