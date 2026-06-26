@@ -45,11 +45,6 @@ const NAME_GLOW_KEYFRAMES = [
   "0 0 20px rgba(252, 211, 77, 1), 0 0 48px rgba(245, 158, 11, 0.95), 0 0 90px rgba(217, 119, 6, 0.75), 0 0 150px rgba(180, 83, 9, 0.5)",
 ];
 
-const AURA_OPACITY_KEYFRAMES = [0.55, 1, 0.7, 1, 0.6, 0.95, 0.55];
-const AURA_SCALE_KEYFRAMES = [0.9, 1.25, 1.05, 1.32, 1.0, 1.22, 0.9];
-const SPARK_OPACITY_KEYFRAMES = [0, 0.9, 0, 1, 0, 0.85, 0];
-const SPARK_SCALE_KEYFRAMES = [0.6, 1.15, 0.7, 1.3, 0.65, 1.1, 0.6];
-
 const viewTransitions = {
   initial: { opacity: 0, scale: 1.04, filter: "blur(10px)" },
   animate: {
@@ -139,61 +134,6 @@ export default function Home() {
               ))}
               <br />
               <span className="relative inline-block mt-4">
-                <motion.span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[180%] blur-2xl"
-                  style={{
-                    background:
-                      "radial-gradient(closest-side, rgba(254, 240, 138, 0.55), rgba(245, 158, 11, 0.4) 35%, rgba(217, 119, 6, 0.18) 65%, transparent 80%)",
-                  }}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{
-                    opacity: AURA_OPACITY_KEYFRAMES,
-                    scale: AURA_SCALE_KEYFRAMES,
-                  }}
-                  transition={{
-                    opacity: {
-                      duration: 2.6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: NAME_DELAY,
-                    },
-                    scale: {
-                      duration: 2.6,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: NAME_DELAY,
-                    },
-                  }}
-                />
-                <motion.span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[120%] blur-lg"
-                  style={{
-                    background:
-                      "radial-gradient(closest-side, rgba(254, 252, 232, 0.85), rgba(252, 211, 77, 0.55) 40%, transparent 75%)",
-                    mixBlendMode: "screen",
-                  }}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{
-                    opacity: SPARK_OPACITY_KEYFRAMES,
-                    scale: SPARK_SCALE_KEYFRAMES,
-                  }}
-                  transition={{
-                    opacity: {
-                      duration: 2.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: NAME_DELAY + 0.3,
-                    },
-                    scale: {
-                      duration: 2.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: NAME_DELAY + 0.3,
-                    },
-                  }}
-                />
                 <motion.span
                   className="relative inline-block text-amber-100"
                   initial={{ opacity: 0, filter: "blur(14px)", y: 10 }}
