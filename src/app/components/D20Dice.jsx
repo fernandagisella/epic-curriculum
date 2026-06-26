@@ -112,7 +112,7 @@ function D20Svg({ value }) {
 export default function D20Dice({ onComplete }) {
   const [phase, setPhase] = useState("rolling");
   const [displayValue, setDisplayValue] = useState(
-    () => Math.floor(Math.random() * 20) + 1
+    () => Math.floor(Math.random() * 20) + 1,
   );
   const [finalValue, setFinalValue] = useState(null);
 
@@ -144,16 +144,21 @@ export default function D20Dice({ onComplete }) {
 
   const diceAnimate =
     phase === "rolling"
-      ? { rotate: [0, 14, -14, 10, -10, 0], y: [0, -10, 0, -6, 0] }
+      ? {
+          x: [0, -180, 220, -150, 170, -90, 110, 0],
+          y: [0, -130, 80, 150, -90, 110, -40, 0],
+          rotate: [0, 220, 540, 820, 1100, 1280, 1400, 1440],
+          scale: [1, 0.85, 0.92, 0.88, 0.95, 0.9, 1.05, 1],
+        }
       : outcome === "criticalFail"
-        ? { x: [0, -16, 16, -12, 12, -6, 6, 0], rotate: [0, -3, 3, -2, 2, 0] }
+        ? { x: [0, -16, 16, -12, 12, -6, 6, 0] }
         : outcome === "criticalSuccess"
           ? { scale: [1, 1.08, 1, 1.08, 1], filter: CRIT_GLOW_KEYFRAMES }
           : { scale: [1, 1.04, 1] };
 
   const diceTransition =
     phase === "rolling"
-      ? { duration: 0.45, repeat: Infinity, ease: "easeInOut" }
+      ? { duration: ROLL_DURATION / 1000, ease: "easeInOut" }
       : outcome === "criticalFail"
         ? { duration: 0.7, ease: "easeInOut" }
         : outcome === "criticalSuccess"
@@ -194,11 +199,37 @@ export default function D20Dice({ onComplete }) {
               type="button"
               onClick={() => onComplete?.(finalValue)}
               initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
-              className="mt-2 inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
+              animate={{
+                opacity: 1,
+                y: 0,
+                boxShadow: [
+                  "0 0 0px rgba(252, 211, 77, 0)",
+                  "0 0 26px rgba(252, 211, 77, 0.4)",
+                  "0 0 10px rgba(252, 211, 77, 0.15)",
+                  "0 0 26px rgba(252, 211, 77, 0.4)",
+                ],
+              }}
+              transition={{
+                opacity: { duration: 0.6, ease: "easeOut", delay: 0.9 },
+                y: { duration: 0.6, ease: "easeOut", delay: 0.9 },
+                boxShadow: {
+                  duration: 2.4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1.4,
+                },
+              }}
+              whileHover={{
+                scale: 1.04,
+                boxShadow: "0 0 44px rgba(252, 211, 77, 0.7)",
+              }}
+              whileTap={{
+                scale: 0.96,
+                boxShadow: "0 0 64px rgba(254, 240, 138, 0.95)",
+              }}
+              className="mt-2 inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 transition-colors duration-200"
             >
-              Meet the Weaver Sorcerer →
+              Meet your adventure partner →
             </motion.button>
           </motion.div>
         )}

@@ -1,6 +1,7 @@
 "use client";
 
-import { WitchFace, Talk } from "../icons";
+import { motion } from "framer-motion";
+import { WitchFace, Talk, MagicPotion } from "../icons";
 
 const LANGUAGES = [
   {
@@ -92,9 +93,70 @@ function SkillRow({ skill }) {
   );
 }
 
-export default function Stats() {
+function ManaBar({ rollResult }) {
+  const isCrit = rollResult === 20;
+  const isFumble = rollResult === 1;
+  const fillPercent = rollResult ? (rollResult / 20) * 100 : 0;
+  const targetWidth = `${fillPercent}%`;
+  const fillDuration = isFumble ? 3.5 : isCrit ? 1.8 : 1.5;
+
+  const borderClass = isCrit
+    ? "border-amber-300 animate-pulse shadow-[0_0_24px_4px_rgba(252,211,77,0.55)]"
+    : isFumble
+      ? "border-rose-900/60"
+      : "border-amber-900/50";
+  const fillClass = isFumble
+    ? "bg-gradient-to-r from-rose-950 via-rose-800/80 to-amber-700/60"
+    : isCrit
+      ? "bg-gradient-to-r from-amber-500 via-amber-300 to-amber-100"
+      : "bg-gradient-to-r from-amber-800 via-amber-500 to-amber-300";
+
+  return (
+    <section
+      className={`relative border-2 bg-stone-950/60 p-5 shadow-inner shadow-black/40 transition-colors duration-500 ${borderClass}`}
+    >
+      <header className="flex items-center gap-3 mb-3">
+        <MagicPotion className="w-6 h-6 text-amber-300" />
+        <div className="flex-1">
+          <p className="font-gothic text-[0.65rem] uppercase tracking-[0.3em] text-amber-500/80">
+            Resource Pool
+          </p>
+          <h3 className="font-gothic text-base sm:text-lg uppercase tracking-[0.25em] text-amber-200">
+            Mana <span className="text-amber-500/70">(Coffee Supply)</span>
+          </h3>
+        </div>
+        {rollResult != null && (
+          <span className="font-gothic text-xs sm:text-sm uppercase tracking-[0.25em] text-amber-300/90">
+            {Math.round(fillPercent)}%
+          </span>
+        )}
+      </header>
+      <div className="h-5 border border-amber-900/60 bg-stone-950/80 overflow-hidden">
+        <motion.div
+          className={`h-full ${fillClass}`}
+          initial={{ width: "0%" }}
+          animate={{ width: targetWidth }}
+          transition={{ duration: fillDuration, ease: "easeOut" }}
+        />
+      </div>
+      <p className="font-medieval italic text-xs text-amber-100/70 mt-2 min-h-[1.25rem]">
+        {isCrit
+          ? "Natural 20! Mana overflowing — caffeine surges through every keystroke."
+          : isFumble
+            ? "Critical fumble! The pool is bone-dry — scarce sips remain."
+            : rollResult
+              ? `Initiative rolled: ${rollResult} — channel running at ${Math.round(fillPercent)}% capacity.`
+              : "Channeling the brew..."}
+      </p>
+    </section>
+  );
+}
+
+export default function Stats({ rollResult }) {
   return (
     <div className="flex flex-col gap-5">
+      <ManaBar rollResult={rollResult} />
+
       <section className="border-2 border-amber-900/40 bg-stone-950/60 p-5 shadow-inner shadow-black/40">
         <header className="flex items-center gap-3 border-b border-amber-900/30 pb-3 mb-4">
           <Talk className="w-6 h-6 text-amber-300" />

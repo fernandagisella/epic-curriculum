@@ -5,12 +5,12 @@ import { WitchHat, BookAura } from "../icons";
 
 const ACADEMIES = [
   {
-    name: "The Interamerican Tower (UNID)",
+    name: "The Interamerican Tower (UNID) 2017-2019",
     degree: "Master's Degree in Information Technology",
     lore: "Where she perfected the high magics of systems management.",
   },
   {
-    name: "The Polytechnic Bastion of San Luis Potosí (UPSLP)",
+    name: "The Polytechnic Bastion of San Luis Potosí (UPSLP) 2011-2016",
     degree: "Bachelor's Degree in Information Technology Engineering",
     lore: "The grand academy where her first logical seals and core spells were forged.",
   },
@@ -56,7 +56,15 @@ function IdentityCard() {
           Class / Title
         </p>
         <p className="font-medieval text-lg text-amber-100/90 mt-0.5">
-          Level 8 Frontend Sorceress
+          Level 8 Frontend Witch
+        </p>
+      </div>
+      <div>
+        <p className="font-gothic text-[0.65rem] uppercase tracking-[0.3em] text-amber-500/80">
+          Pronouns
+        </p>
+        <p className="font-medieval text-lg text-amber-100/90 mt-0.5">
+          They / She
         </p>
       </div>
       <div>
@@ -88,7 +96,7 @@ export default function Lore() {
         </header>
         <p className="font-medieval italic text-amber-100/90 leading-relaxed text-base sm:text-lg">
           Born beneath the celestial alignment of ancient logic and creative
-          sparks, this Sorceress hath spent eight long years refining the arcane
+          sparks, this Witch hath spent eight long years refining the arcane
           arts of the web. Known across the digital realms as a witch who twists
           reality through a glowing screen, she weaves complex responsive
           interfaces with the speed of thought. Beware her gaze, for she can
@@ -116,9 +124,7 @@ export default function Lore() {
               <h4 className="font-gothic text-base uppercase tracking-[0.2em] text-amber-200">
                 {a.name}
               </h4>
-              <p className="font-medieval text-amber-100/90 mt-1">
-                {a.degree}
-              </p>
+              <p className="font-medieval text-amber-100/90 mt-1">{a.degree}</p>
               <p className="font-medieval italic text-sm text-amber-100/70 mt-1">
                 {a.lore}
               </p>

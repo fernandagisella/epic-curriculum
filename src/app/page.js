@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { DiceTwentyFacesTwenty } from "./components/icons";
 import GrimoireTabs from "./components/GrimoireTabs";
 import D20Dice from "./components/D20Dice";
+import AmbientParticles from "./components/AmbientParticles";
 
 const PROSE =
   "Hail, brave Traveler! Thou hast stumbled upon the Great Rift of Hackathon 2026. The path ahead is perilous, dark, and plagued with legacy code. Servers crash, databases wither, and bugs lurk deep within the shadows... It is dangerous to go alone! Take her with thee:";
@@ -35,98 +36,210 @@ const wordVariants = {
 };
 
 const NAME_GLOW_KEYFRAMES = [
-  "0 0 12px rgba(252, 211, 77, 0.9), 0 0 28px rgba(245, 158, 11, 0.7), 0 0 50px rgba(217, 119, 6, 0.5)",
-  "0 0 22px rgba(254, 240, 138, 1), 0 0 48px rgba(245, 158, 11, 0.95), 0 0 80px rgba(217, 119, 6, 0.75)",
-  "0 0 10px rgba(252, 211, 77, 0.85), 0 0 24px rgba(245, 158, 11, 0.65), 0 0 46px rgba(217, 119, 6, 0.45)",
-  "0 0 28px rgba(254, 240, 138, 1), 0 0 60px rgba(252, 211, 77, 1), 0 0 96px rgba(245, 158, 11, 0.9)",
-  "0 0 14px rgba(252, 211, 77, 0.95), 0 0 30px rgba(245, 158, 11, 0.75), 0 0 52px rgba(217, 119, 6, 0.55)",
-  "0 0 20px rgba(254, 240, 138, 1), 0 0 44px rgba(245, 158, 11, 0.9), 0 0 74px rgba(217, 119, 6, 0.7)",
-  "0 0 12px rgba(252, 211, 77, 0.9), 0 0 28px rgba(245, 158, 11, 0.7), 0 0 50px rgba(217, 119, 6, 0.5)",
+  "0 0 20px rgba(252, 211, 77, 1), 0 0 48px rgba(245, 158, 11, 0.95), 0 0 90px rgba(217, 119, 6, 0.75), 0 0 150px rgba(180, 83, 9, 0.5)",
+  "0 0 34px rgba(254, 240, 138, 1), 0 0 76px rgba(252, 211, 77, 1), 0 0 130px rgba(245, 158, 11, 1), 0 0 200px rgba(217, 119, 6, 0.85)",
+  "0 0 16px rgba(252, 211, 77, 0.95), 0 0 40px rgba(245, 158, 11, 0.85), 0 0 78px rgba(217, 119, 6, 0.6)",
+  "0 0 44px rgba(254, 252, 232, 1), 0 0 92px rgba(252, 211, 77, 1), 0 0 160px rgba(245, 158, 11, 1), 0 0 240px rgba(217, 119, 6, 0.9)",
+  "0 0 22px rgba(252, 211, 77, 1), 0 0 52px rgba(245, 158, 11, 0.9), 0 0 100px rgba(217, 119, 6, 0.7)",
+  "0 0 30px rgba(254, 240, 138, 1), 0 0 70px rgba(245, 158, 11, 1), 0 0 120px rgba(217, 119, 6, 0.85)",
+  "0 0 20px rgba(252, 211, 77, 1), 0 0 48px rgba(245, 158, 11, 0.95), 0 0 90px rgba(217, 119, 6, 0.75), 0 0 150px rgba(180, 83, 9, 0.5)",
 ];
+
+const AURA_OPACITY_KEYFRAMES = [0.55, 1, 0.7, 1, 0.6, 0.95, 0.55];
+const AURA_SCALE_KEYFRAMES = [0.9, 1.25, 1.05, 1.32, 1.0, 1.22, 0.9];
+const SPARK_OPACITY_KEYFRAMES = [0, 0.9, 0, 1, 0, 0.85, 0];
+const SPARK_SCALE_KEYFRAMES = [0.6, 1.15, 0.7, 1.3, 0.65, 1.1, 0.6];
+
+const viewTransitions = {
+  initial: { opacity: 0, scale: 1.04, filter: "blur(10px)" },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.96,
+    filter: "blur(10px)",
+    transition: { duration: 0.55, ease: "easeIn" },
+  },
+};
 
 export default function Home() {
   const [view, setView] = useState("welcome");
-
-  if (view === "rolling") {
-    return (
-      <main className="min-h-screen flex flex-col items-center justify-center gap-8 p-8">
-        <D20Dice onComplete={() => setView("grimoire")} />
-      </main>
-    );
-  }
-
-  if (view === "grimoire") {
-    return (
-      <main className="min-h-screen flex flex-col items-center gap-6 p-4 sm:p-8">
-        <button
-          onClick={() => setView("welcome")}
-          className="self-start font-gothic text-xs uppercase tracking-[0.3em] text-amber-500/80 hover:text-amber-200 border-2 border-amber-900/40 hover:border-amber-700/60 bg-stone-950/60 px-4 py-2 transition-colors duration-200"
-        >
-          ← Return to the Rift
-        </button>
-        <GrimoireTabs />
-      </main>
-    );
-  }
+  const [rollResult, setRollResult] = useState(null);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-12 p-8">
-      <motion.h2
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-        className="font-gothic text-xl md:text-2xl font-black tracking-wider text-amber-200 text-center max-w-2xl leading-relaxed"
-      >
-        {PROSE_WORDS.map((word, i) => (
-          <motion.span
-            key={i}
-            variants={wordVariants}
-            className="inline-block mr-[0.25em]"
+    <>
+      <AmbientParticles />
+      <AnimatePresence mode="wait">
+        {view === "rolling" && (
+          <motion.main
+            key="rolling"
+            initial={viewTransitions.initial}
+            animate={viewTransitions.animate}
+            exit={viewTransitions.exit}
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center gap-8 p-8"
           >
-            {word}
-          </motion.span>
-        ))}
-        <br />
-        <motion.span
-          className="block mt-4 text-amber-100"
-          initial={{ opacity: 0, filter: "blur(14px)", y: 10 }}
-          animate={{
-            opacity: 1,
-            filter: "blur(0px)",
-            y: 0,
-            textShadow: NAME_GLOW_KEYFRAMES,
-          }}
-          transition={{
-            opacity: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
-            filter: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
-            y: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
-            textShadow: {
-              duration: 2.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.18, 0.32, 0.5, 0.68, 0.84, 1],
-              delay: NAME_DELAY,
-            },
-          }}
-        >
-          FER PICHARDO: THE CODE WEAVER WITCH
-        </motion.span>
-      </motion.h2>
+            <D20Dice
+              onComplete={(value) => {
+                setRollResult(value);
+                setView("grimoire");
+              }}
+            />
+          </motion.main>
+        )}
 
-      <motion.button
-        onClick={() => setView("rolling")}
-        initial={{ opacity: 0, y: 14, filter: "blur(10px)", scale: 0.96 }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-        transition={{
-          duration: 0.8,
-          ease: "easeOut",
-          delay: BUTTON_DELAY,
-        }}
-        className="inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
-      >
-        <DiceTwentyFacesTwenty className="w-6 h-6 text-amber-300" />
-        Roll Dice for Initiative
-      </motion.button>
-    </main>
+        {view === "grimoire" && (
+          <motion.main
+            key="grimoire"
+            initial={{ opacity: 0, scale: 1.06, filter: "blur(14px)" }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              transition: { duration: 0.9, ease: "easeOut" },
+            }}
+            exit={viewTransitions.exit}
+            className="relative z-10 min-h-screen flex flex-col items-center gap-6 p-4 sm:p-8"
+          >
+            <button
+              onClick={() => setView("welcome")}
+              className="self-start font-gothic text-xs uppercase tracking-[0.3em] text-amber-500/80 hover:text-amber-200 border-2 border-amber-900/40 hover:border-amber-700/60 bg-stone-950/60 px-4 py-2 transition-colors duration-200"
+            >
+              ← Return to the Rift
+            </button>
+            <GrimoireTabs rollResult={rollResult} />
+          </motion.main>
+        )}
+
+        {view === "welcome" && (
+          <motion.main
+            key="welcome"
+            initial={viewTransitions.initial}
+            animate={viewTransitions.animate}
+            exit={viewTransitions.exit}
+            className="relative z-10 min-h-screen flex flex-col items-center justify-center gap-12 p-8"
+          >
+            <motion.h2
+              initial="hidden"
+              animate="visible"
+              variants={containerVariants}
+              className="font-gothic text-xl md:text-2xl font-black tracking-wider text-amber-200 text-center max-w-2xl leading-relaxed"
+            >
+              {PROSE_WORDS.map((word, i) => (
+                <motion.span
+                  key={i}
+                  variants={wordVariants}
+                  className="inline-block mr-[0.25em]"
+                >
+                  {word}
+                </motion.span>
+              ))}
+              <br />
+              <span className="relative block mt-4">
+                <motion.span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] h-[420%] blur-3xl"
+                  style={{
+                    background:
+                      "radial-gradient(closest-side, rgba(254, 240, 138, 0.55), rgba(245, 158, 11, 0.4) 35%, rgba(217, 119, 6, 0.18) 65%, transparent 80%)",
+                  }}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{
+                    opacity: AURA_OPACITY_KEYFRAMES,
+                    scale: AURA_SCALE_KEYFRAMES,
+                  }}
+                  transition={{
+                    opacity: {
+                      duration: 2.6,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: NAME_DELAY,
+                    },
+                    scale: {
+                      duration: 2.6,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: NAME_DELAY,
+                    },
+                  }}
+                />
+                <motion.span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[105%] h-[150%] blur-xl"
+                  style={{
+                    background:
+                      "radial-gradient(closest-side, rgba(254, 252, 232, 0.85), rgba(252, 211, 77, 0.55) 40%, transparent 75%)",
+                    mixBlendMode: "screen",
+                  }}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{
+                    opacity: SPARK_OPACITY_KEYFRAMES,
+                    scale: SPARK_SCALE_KEYFRAMES,
+                  }}
+                  transition={{
+                    opacity: {
+                      duration: 2.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: NAME_DELAY + 0.3,
+                    },
+                    scale: {
+                      duration: 2.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: NAME_DELAY + 0.3,
+                    },
+                  }}
+                />
+                <motion.span
+                  className="relative block text-amber-100"
+                  initial={{ opacity: 0, filter: "blur(14px)", y: 10 }}
+                  animate={{
+                    opacity: 1,
+                    filter: "blur(0px)",
+                    y: 0,
+                    textShadow: NAME_GLOW_KEYFRAMES,
+                  }}
+                  transition={{
+                    opacity: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
+                    filter: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
+                    y: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
+                    textShadow: {
+                      duration: 2.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      times: [0, 0.18, 0.32, 0.5, 0.68, 0.84, 1],
+                      delay: NAME_DELAY,
+                    },
+                  }}
+                >
+                  FER PICHARDO: THE CODE WEAVER WITCH
+                </motion.span>
+              </span>
+            </motion.h2>
+
+            <motion.button
+              onClick={() => setView("rolling")}
+              initial={{ opacity: 0, y: 14, filter: "blur(10px)", scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+              transition={{
+                duration: 0.8,
+                ease: "easeOut",
+                delay: BUTTON_DELAY,
+              }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
+            >
+              <DiceTwentyFacesTwenty className="w-6 h-6 text-amber-300" />
+              Roll Dice for Initiative
+            </motion.button>
+          </motion.main>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${cinzel.variable} ${garamond.variable} antialiased bg-stone-900 text-amber-100`}
+        className={`${cinzel.variable} ${garamond.variable} antialiased bg-stone-900 text-amber-100 overflow-x-hidden`}
       >
         {children}
       </body>
