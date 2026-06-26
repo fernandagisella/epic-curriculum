@@ -84,7 +84,8 @@ export default function Home() {
     rollSoundRef.current.play().catch((err) => {
       console.warn("Roll sound playback failed:", err);
     });
-    setView("rolling");
+    // Let the sound "announce" the roll before the view transitions.
+    setTimeout(() => setView("rolling"), 300);
   };
 
   const stopRollSound = () => {
