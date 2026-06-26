@@ -1,6 +1,6 @@
 "use client";
 
-import { Tarot01TheMagician, WitchHat, BookAura } from "../icons";
+import { WitchHat, BookAura } from "../icons";
 
 const ACADEMIES = [
   {
@@ -18,11 +18,16 @@ const ACADEMIES = [
 function PortraitCard() {
   return (
     <div className="border-2 border-amber-700/60 bg-stone-950/70 p-3 shadow-inner shadow-black/40">
-      <div className="relative aspect-square w-full sm:w-48 md:w-56 border-2 border-dashed border-amber-600/50 bg-gradient-to-br from-stone-900 via-amber-950/30 to-stone-900 flex items-center justify-center overflow-hidden">
-        <Tarot01TheMagician className="w-28 h-28 text-amber-300/90 drop-shadow-[0_0_18px_rgba(252,211,77,0.4)]" />
-        <div className="absolute top-2 left-2 flex items-center gap-1.5">
-          <WitchHat className="w-4 h-4 text-amber-500/70" />
-          <span className="font-gothic text-[0.55rem] uppercase tracking-[0.3em] text-amber-500/70">
+      <div className="relative aspect-square w-full sm:w-48 md:w-56 border-2 border-dashed border-amber-600/50 overflow-hidden">
+        <img
+          src="/assets/Me.png"
+          alt="Portrait of Fer Pichardo, the Code Weaver Witch"
+          className="absolute inset-0 w-full h-full object-cover sepia-[0.25] saturate-[1.15] contrast-[1.05] brightness-[0.95]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-stone-950/60 px-1.5 py-0.5 border border-amber-900/40">
+          <WitchHat className="w-3 h-3 text-amber-300" />
+          <span className="font-gothic text-[0.55rem] uppercase tracking-[0.3em] text-amber-300">
             Portrait
           </span>
         </div>
