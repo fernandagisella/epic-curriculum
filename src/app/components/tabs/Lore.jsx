@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { WitchHat, BookAura } from "../icons";
+import { WitchHat, BookAura, MagicBall, ShepherdsCrook } from "../icons";
 
 const ACADEMIES = [
   {
@@ -107,13 +107,16 @@ export default function Lore() {
       </section>
 
       <section className="border-2 border-amber-900/40 bg-stone-950/60 p-5 shadow-inner shadow-black/40">
-        <header className="border-b border-amber-900/30 pb-3 mb-4">
-          <p className="font-gothic text-[0.65rem] uppercase tracking-[0.3em] text-amber-500/80">
-            Formal Studies
-          </p>
-          <h3 className="font-gothic text-lg uppercase tracking-[0.25em] text-amber-200">
-            Arcane Training
-          </h3>
+        <header className="flex items-center gap-3 border-b border-amber-900/30 pb-3 mb-4">
+          <MagicBall className="w-6 h-6 text-amber-300" />
+          <div>
+            <p className="font-gothic text-[0.65rem] uppercase tracking-[0.3em] text-amber-500/80">
+              Formal Studies
+            </p>
+            <h3 className="font-gothic text-lg uppercase tracking-[0.25em] text-amber-200">
+              Arcane Training
+            </h3>
+          </div>
         </header>
         <ul className="flex flex-col gap-4">
           {ACADEMIES.map((a) => (
@@ -121,13 +124,20 @@ export default function Lore() {
               key={a.name}
               className="border border-amber-900/30 bg-stone-900/60 p-4"
             >
-              <h4 className="font-gothic text-base uppercase tracking-[0.2em] text-amber-200">
-                {a.name}
-              </h4>
-              <p className="font-medieval text-amber-100/90 mt-1">{a.degree}</p>
-              <p className="font-medieval italic text-sm text-amber-100/70 mt-1">
-                {a.lore}
-              </p>
+              <div className="flex items-start gap-3">
+                <ShepherdsCrook className="w-6 h-6 text-amber-300 shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h4 className="font-gothic text-base uppercase tracking-[0.2em] text-amber-200">
+                    {a.name}
+                  </h4>
+                  <p className="font-medieval text-amber-100/90 mt-1">
+                    {a.degree}
+                  </p>
+                  <p className="font-medieval italic text-sm text-amber-100/70 mt-1">
+                    {a.lore}
+                  </p>
+                </div>
+              </div>
             </li>
           ))}
         </ul>

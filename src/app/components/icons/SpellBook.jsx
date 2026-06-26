@@ -6,7 +6,7 @@ function SpellBook({ className }) {
       viewBox="0 0 500 500"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`transition-all duration-300 hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.7)] hover:scale-110 ${className || ""}`}
     >
       <path d="m41.975 142.21c-4.7 3.261.027 10.341 4.839 7.241 4.705-3.261-.026-10.34-4.839-7.241z" />
       <path d="m41.975 362.614c-4.7 3.261.027 10.341 4.839 7.241 4.705-3.261-.026-10.34-4.839-7.241z" />

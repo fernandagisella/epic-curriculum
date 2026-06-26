@@ -6,7 +6,7 @@ function MagicBall({ className }) {
       viewBox="0 0 192 192"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`transition-all duration-300 hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.7)] hover:scale-110 ${className || ""}`}
     >
       <g>
         <path d="M96,168a64,64,0,1,0-64-64A64.072,64.072,0,0,0,96,168Zm32-96a8,8,0,1,1-8,8A8,8,0,0,1,128,72ZM53.739,99.326A14.246,14.246,0,0,0,67.87,85a2,2,0,0,1,4,0A14.245,14.245,0,0,0,86,99.326a2,2,0,0,1,0,4,14.245,14.245,0,0,0-14.13,14.326,2,2,0,0,1-4,0,14.246,14.246,0,0,0-14.131-14.326,2,2,0,0,1,0-4Z" />

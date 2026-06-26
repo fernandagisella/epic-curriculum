@@ -5,6 +5,9 @@ import {
   ShepherdsCrook,
   ThunderBlade,
   TreasureChest,
+  Figurehead,
+  Cultist,
+  MagicWand,
 } from "../icons";
 
 const MISSIONS = [
@@ -14,6 +17,7 @@ const MISSIONS = [
     guildType: "Tech Venture Studio",
     timeline: "January 2025 — Present",
     active: true,
+    Icon: Figurehead,
     objective:
       "Architect and power a massive resource-management ecosystem for a fleet of cutting-edge electric-motor maritime vessels.",
     loot: [
@@ -27,6 +31,7 @@ const MISSIONS = [
     guildType: "Global IT Consultancy",
     timeline: "June 2022 — October 2024",
     active: false,
+    Icon: Cultist,
     objective:
       "Analyze, develop, and maintain a massive large-scale CRM project alongside a multinational party across various time zones.",
     loot: [
@@ -41,6 +46,7 @@ const MISSIONS = [
     guildType: "Advertising & Creative Agency",
     timeline: "October 2020 — June 2022",
     active: false,
+    Icon: MagicWand,
     objective:
       "Acted as a versatile multi-class hero within an agile team to gather requirements, design interfaces, and build scalable systems.",
     loot: [
@@ -52,16 +58,20 @@ const MISSIONS = [
 ];
 
 function Mission({ mission }) {
+  const { Icon } = mission;
   return (
     <article className="border-2 border-amber-900/40 bg-stone-950/60 p-5 shadow-inner shadow-black/40">
-      <header className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 border-b border-amber-900/30 pb-3 mb-3">
-        <div>
-          <p className="font-gothic text-[0.65rem] uppercase tracking-[0.3em] text-amber-500/80">
-            Campaign
-          </p>
-          <h3 className="font-gothic text-xl uppercase tracking-[0.2em] text-amber-200">
-            {mission.name}
-          </h3>
+      <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 border-b border-amber-900/30 pb-3 mb-3">
+        <div className="flex items-center gap-3">
+          <Icon className="w-8 h-8 text-amber-300 shrink-0" />
+          <div>
+            <p className="font-gothic text-[0.65rem] uppercase tracking-[0.3em] text-amber-500/80">
+              Campaign
+            </p>
+            <h3 className="font-gothic text-xl uppercase tracking-[0.2em] text-amber-200">
+              {mission.name}
+            </h3>
+          </div>
         </div>
         <div className="flex flex-col sm:items-end gap-1.5">
           <span className="font-medieval text-sm italic text-amber-100/80">

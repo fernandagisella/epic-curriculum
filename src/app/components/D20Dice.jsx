@@ -43,9 +43,15 @@ function classify(roll) {
 }
 
 const CRIT_GLOW_KEYFRAMES = [
-  "drop-shadow(0 0 8px rgba(252, 211, 77, 0.6)) drop-shadow(0 0 18px rgba(245, 158, 11, 0.5))",
-  "drop-shadow(0 0 22px rgba(254, 240, 138, 1)) drop-shadow(0 0 46px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 80px rgba(217, 119, 6, 0.7))",
-  "drop-shadow(0 0 8px rgba(252, 211, 77, 0.6)) drop-shadow(0 0 18px rgba(245, 158, 11, 0.5))",
+  "drop-shadow(0 0 6px rgba(252, 211, 77, 0.35)) drop-shadow(0 0 14px rgba(245, 158, 11, 0.25))",
+  "drop-shadow(0 0 14px rgba(254, 240, 138, 0.6)) drop-shadow(0 0 28px rgba(245, 158, 11, 0.45)) drop-shadow(0 0 48px rgba(217, 119, 6, 0.3))",
+  "drop-shadow(0 0 6px rgba(252, 211, 77, 0.35)) drop-shadow(0 0 14px rgba(245, 158, 11, 0.25))",
+];
+
+const LABEL_RUNE_GLOW = [
+  "drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))",
+  "drop-shadow(0 0 14px rgba(245, 158, 11, 0.55))",
+  "drop-shadow(0 0 6px rgba(245, 158, 11, 0.3))",
 ];
 
 function D20Svg({ value }) {
@@ -192,8 +198,8 @@ export default function D20Dice({ onComplete }) {
         ? { duration: 0.7, ease: "easeInOut" }
         : outcome === "criticalSuccess"
           ? {
-              scale: { duration: 1.6, repeat: Infinity, ease: "easeInOut" },
-              filter: { duration: 1.6, repeat: Infinity, ease: "easeInOut" },
+              scale: { duration: 3.2, repeat: Infinity, ease: "easeInOut" },
+              filter: { duration: 3.2, repeat: Infinity, ease: "easeInOut" },
             }
           : outcome === "greatSuccess"
             ? { duration: 1.1, ease: "easeOut" }
@@ -220,23 +226,29 @@ export default function D20Dice({ onComplete }) {
             transition={{ duration: 0.75, ease: "easeOut" }}
             className="text-center flex flex-col items-center gap-5"
           >
-            <p
+            <motion.p
               className={`font-gothic text-xs sm:text-sm uppercase tracking-[0.4em] ${OUTCOMES[outcome].color}`}
+              animate={{ filter: LABEL_RUNE_GLOW }}
+              transition={{
+                duration: 5.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
               {OUTCOMES[outcome].label} · {finalValue}
-            </p>
+            </motion.p>
             <p className="font-medieval italic text-lg sm:text-xl leading-relaxed text-amber-100/90">
               {OUTCOMES[outcome].copy}
             </p>
             <motion.button
               type="button"
               onClick={() => onComplete?.(finalValue)}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="mt-2 inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                opacity: { duration: 0.6, ease: "easeOut", delay: 0.9 },
+              }}
+              className="mt-2 inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-[border-color,background-color,box-shadow,filter,transform] duration-300 hover:scale-105 active:scale-95 hover:drop-shadow-[0_0_15px_rgba(245,158,11,0.8)]"
             >
               Meet your adventure partner →
             </motion.button>

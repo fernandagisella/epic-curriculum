@@ -11,7 +11,7 @@ function TreasureChest({ className }) {
       strokeLinejoin="round"
       strokeMiterlimit="10"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`transition-all duration-300 hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.7)] hover:scale-110 ${className || ""}`}
     >
       <path d="M481,494.494H30c-11.046,0-20-8.954-20-20V236.751c0-11.046,8.954-20,20-20h451c11.046,0,20,8.954,20,20v237.743C501,485.54,492.046,494.494,481,494.494z" />
       <path d="M210.657,454.497H99.12c0-27.13-21.99-49.13-49.12-49.13v-99.49c27.13,0,49.12-21.99,49.12-49.13h312.76c0,27.14,21.99,49.13,49.12,49.13v99.49c-27.13,0-49.12,22-49.12,49.13H300.343" />

@@ -6,7 +6,7 @@ function Wizard({ className }) {
       viewBox="0 0 512 512"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`transition-all duration-300 hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.7)] hover:scale-110 ${className || ""}`}
     >
       <g>
         <path d="m436 30c8.284 0 15-6.716 15-15s-6.716-15-15-15h-330c-24.813 0-45 20.187-45 45v422c0 24.813 20.187 45 45 45h330c8.284 0 15-6.716 15-15v-422c0-8.284-6.716-15-15-15h-15v-30zm-15 452h-315c-8.271 0-15-6.729-15-15v-379.57c4.693 1.664 9.743 2.57 15 2.57h315zm-30-422h-285c-8.271 0-15-6.729-15-15s6.729-15 15-15h285z" />

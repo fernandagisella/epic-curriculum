@@ -8,7 +8,7 @@ import D20Dice from "./components/D20Dice";
 import AmbientParticles from "./components/AmbientParticles";
 
 const PROSE =
-  "Hail, brave Traveler! Thou hast stumbled upon the Great Rift of Hackathon 2026. The path ahead is perilous, dark, and plagued with legacy code. Servers crash, databases wither, and bugs lurk deep within the shadows... It is dangerous to go alone! Take her with thee:";
+  "Hail, brave Traveler! Thou hast stumbled upon the Great Rift of Hackathon 2026. The path ahead is perilous, dark, and plagued with legacy code. Servers crash, databases wither, and bugs lurk deep within the shadows... It is dangerous to go alone! Take them with thee:";
 
 const PROSE_WORDS = PROSE.split(" ");
 
@@ -101,7 +101,7 @@ export default function Home() {
           >
             <button
               onClick={() => setView("welcome")}
-              className="self-start font-gothic text-xs uppercase tracking-[0.3em] text-amber-500/80 hover:text-amber-200 border-2 border-amber-900/40 hover:border-amber-700/60 bg-stone-950/60 px-4 py-2 transition-colors duration-200"
+              className="self-start font-gothic text-xs uppercase tracking-[0.3em] text-amber-500/80 hover:text-amber-200 border-2 border-amber-900/40 hover:border-amber-700/60 bg-stone-950/60 px-4 py-2 transition-all duration-300 hover:scale-105 hover:drop-shadow-[0_0_15px_rgba(245,158,11,0.8)]"
             >
               ← Return to the Rift
             </button>
@@ -144,8 +144,16 @@ export default function Home() {
                     textShadow: NAME_GLOW_KEYFRAMES,
                   }}
                   transition={{
-                    opacity: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
-                    filter: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
+                    opacity: {
+                      duration: 0.9,
+                      delay: NAME_DELAY,
+                      ease: "easeOut",
+                    },
+                    filter: {
+                      duration: 0.9,
+                      delay: NAME_DELAY,
+                      ease: "easeOut",
+                    },
                     y: { duration: 0.9, delay: NAME_DELAY, ease: "easeOut" },
                     textShadow: {
                       duration: 2.2,
@@ -163,16 +171,16 @@ export default function Home() {
 
             <motion.button
               onClick={() => setView("rolling")}
-              initial={{ opacity: 0, y: 14, filter: "blur(10px)", scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{
-                duration: 0.8,
-                ease: "easeOut",
-                delay: BUTTON_DELAY,
+                opacity: {
+                  duration: 0.8,
+                  ease: "easeOut",
+                  delay: BUTTON_DELAY,
+                },
               }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
+              className="inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-[border-color,background-color,box-shadow,filter,transform] duration-300 hover:scale-105 active:scale-95 hover:drop-shadow-[0_0_15px_rgba(245,158,11,0.8)]"
             >
               <DiceTwentyFacesTwenty className="w-6 h-6 text-amber-300" />
               Roll Dice for Initiative
