@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    cursor: url("/cursors/orb-wand.svg") 21 10, auto;
+  }
+
+  a,
+  button,
+  [role="button"],
+  [role="tab"] {
+    cursor: url("/cursors/orb-wand-glow.svg") 27 13, pointer;
+  }
+}

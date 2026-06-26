@@ -199,35 +199,11 @@ export default function D20Dice({ onComplete }) {
               type="button"
               onClick={() => onComplete?.(finalValue)}
               initial={{ opacity: 0, y: 8 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                boxShadow: [
-                  "0 0 0px rgba(252, 211, 77, 0)",
-                  "0 0 26px rgba(252, 211, 77, 0.4)",
-                  "0 0 10px rgba(252, 211, 77, 0.15)",
-                  "0 0 26px rgba(252, 211, 77, 0.4)",
-                ],
-              }}
-              transition={{
-                opacity: { duration: 0.6, ease: "easeOut", delay: 0.9 },
-                y: { duration: 0.6, ease: "easeOut", delay: 0.9 },
-                boxShadow: {
-                  duration: 2.4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.4,
-                },
-              }}
-              whileHover={{
-                scale: 1.04,
-                boxShadow: "0 0 44px rgba(252, 211, 77, 0.7)",
-              }}
-              whileTap={{
-                scale: 0.96,
-                boxShadow: "0 0 64px rgba(254, 240, 138, 0.95)",
-              }}
-              className="mt-2 inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 transition-colors duration-200"
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="mt-2 inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
             >
               Meet your adventure partner →
             </motion.button>

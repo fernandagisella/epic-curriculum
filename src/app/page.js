@@ -138,10 +138,10 @@ export default function Home() {
                 </motion.span>
               ))}
               <br />
-              <span className="relative block mt-4">
+              <span className="relative inline-block mt-4">
                 <motion.span
                   aria-hidden="true"
-                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] h-[420%] blur-3xl"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[180%] blur-2xl"
                   style={{
                     background:
                       "radial-gradient(closest-side, rgba(254, 240, 138, 0.55), rgba(245, 158, 11, 0.4) 35%, rgba(217, 119, 6, 0.18) 65%, transparent 80%)",
@@ -168,7 +168,7 @@ export default function Home() {
                 />
                 <motion.span
                   aria-hidden="true"
-                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[105%] h-[150%] blur-xl"
+                  className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[120%] blur-lg"
                   style={{
                     background:
                       "radial-gradient(closest-side, rgba(254, 252, 232, 0.85), rgba(252, 211, 77, 0.55) 40%, transparent 75%)",
@@ -195,7 +195,7 @@ export default function Home() {
                   }}
                 />
                 <motion.span
-                  className="relative block text-amber-100"
+                  className="relative inline-block text-amber-100"
                   initial={{ opacity: 0, filter: "blur(14px)", y: 10 }}
                   animate={{
                     opacity: 1,
