@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { DiceTwentyFacesTwenty } from "./components/icons";
 import GrimoireTabs from "./components/GrimoireTabs";
+import D20Dice from "./components/D20Dice";
 
 const PROSE =
   "Hail, brave Traveler! Thou hast stumbled upon the Great Rift of Hackathon 2026. The path ahead is perilous, dark, and plagued with legacy code. Servers crash, databases wither, and bugs lurk deep within the shadows... It is dangerous to go alone! Take her with thee:";
@@ -43,6 +44,14 @@ const NAME_GLOW_KEYFRAMES = [
 
 export default function Home() {
   const [view, setView] = useState("welcome");
+
+  if (view === "rolling") {
+    return (
+      <main className="min-h-screen flex flex-col items-center justify-center gap-8 p-8">
+        <D20Dice onComplete={() => setView("grimoire")} />
+      </main>
+    );
+  }
 
   if (view === "grimoire") {
     return (
@@ -103,7 +112,7 @@ export default function Home() {
       </motion.h2>
 
       <button
-        onClick={() => setView("grimoire")}
+        onClick={() => setView("rolling")}
         className="inline-flex items-center gap-3 font-gothic text-sm sm:text-base uppercase tracking-[0.35em] text-amber-200 border-2 border-amber-700/60 hover:border-amber-500/80 bg-stone-950/70 hover:bg-amber-900/20 px-8 py-4 shadow-inner shadow-black/40 transition-colors duration-200"
       >
         <DiceTwentyFacesTwenty className="w-6 h-6 text-amber-300" />

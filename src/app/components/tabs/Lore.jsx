@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { WitchHat, BookAura } from "../icons";
 
 const ACADEMIES = [
@@ -19,10 +20,13 @@ function PortraitCard() {
   return (
     <div className="border-2 border-amber-700/60 bg-stone-950/70 p-3 shadow-inner shadow-black/40">
       <div className="relative aspect-square w-full sm:w-48 md:w-56 border-2 border-dashed border-amber-600/50 overflow-hidden">
-        <img
+        <Image
           src="/assets/Me.png"
           alt="Portrait of Fer Pichardo, the Code Weaver Witch"
-          className="absolute inset-0 w-full h-full object-cover sepia-[0.25] saturate-[1.15] contrast-[1.05] brightness-[0.95]"
+          fill
+          sizes="(max-width: 640px) 100vw, 224px"
+          priority
+          className="object-cover sepia-[0.25] saturate-[1.15] contrast-[1.05] brightness-[0.95]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-950/40 via-transparent to-transparent pointer-events-none" />
         <div className="absolute top-2 left-2 flex items-center gap-1.5 bg-stone-950/60 px-1.5 py-0.5 border border-amber-900/40">
