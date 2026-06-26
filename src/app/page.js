@@ -6,6 +6,7 @@ import { DiceTwentyFacesTwenty } from "./components/icons";
 import GrimoireTabs from "./components/GrimoireTabs";
 import D20Dice from "./components/D20Dice";
 import AmbientParticles from "./components/AmbientParticles";
+import CursorTrail from "./components/CursorTrail";
 
 const PROSE =
   "Hail, brave Traveler! Thou hast stumbled upon the Great Rift of Hackathon 2026. The path ahead is perilous, dark, and plagued with legacy code. Servers crash, databases wither, and bugs lurk deep within the shadows... It is dangerous to go alone! Take them with thee:";
@@ -68,6 +69,7 @@ export default function Home() {
   return (
     <>
       <AmbientParticles />
+      <CursorTrail />
       <AnimatePresence mode="wait">
         {view === "rolling" && (
           <motion.main
